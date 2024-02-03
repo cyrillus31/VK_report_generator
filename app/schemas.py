@@ -20,6 +20,7 @@ class RelatedUserOut(BaseModel):
     last_name: str
     about: str = "" 
     bdate: Optional[str] = "" 
+    groups: Optional[list[dict | None]] = [] 
     # link: Optional[HttpUrl] | None = None
 
 
