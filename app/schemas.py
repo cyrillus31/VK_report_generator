@@ -9,8 +9,8 @@ class RelatedUserIn(BaseModel):
     first_name: str = ""
     last_name: str = ""
     about: str = ""
-    bdate: Optional[date] = None
-    link: Optional[HttpUrl]
+    bdate: Optional[date] = "" 
+    # link: Optional[HttpUrl] | None = None
 
 
 class RelatedUserOut(BaseModel):
@@ -18,6 +18,9 @@ class RelatedUserOut(BaseModel):
     social_network: str = "vkontakte"
     first_name: str
     last_name: str
-    about: str = ""
-    bdate: Optional[date] = None
-    link: Optional[HttpUrl]
+    about: str = "" 
+    bdate: Optional[str] = "" 
+    # link: Optional[HttpUrl] | None = None
+
+
+print(RelatedUserOut)
