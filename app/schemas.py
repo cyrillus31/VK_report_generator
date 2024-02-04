@@ -22,5 +22,3 @@ class RelatedUserOut(BaseModel):
     groups: Optional[list[dict | None | int]] = [] 
     # link: Optional[HttpUrl] | None = None
 
-
-print(RelatedUserOut)

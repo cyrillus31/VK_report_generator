@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h1>{{user_first_name}}</h1>
+<h1>List of users ralated to {{ user_first_name }} {{ user_last_name }} (id: {{ user_id }})</h1><br><br>
 
 {% for friend in friends %}
 <h2>{{ friend["first_name"] }} {{ friend["last_name"] }}</h2>
