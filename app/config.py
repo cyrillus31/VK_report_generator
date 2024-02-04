@@ -7,7 +7,7 @@ cwd = os.getcwd()
 class Settings(BaseSettings):
     api_key: str 
     access_token: str
-    rabbit_host: int 
+    rabbit_host: str 
     rabbit_port: int 
     rabbit_name: str
     rabbit_password: str

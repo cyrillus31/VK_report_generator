@@ -1,0 +1,13 @@
+version: '3'
+services:
+  api:
+    env_file:
+        - .env
+    build: Dockerfile.app
+    ports:
+        - '8000:8000'
+    depends_on: 
+        - celery
+
+          #   celery:
+          #     build: Dockerfile.celery
