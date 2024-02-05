@@ -3,6 +3,8 @@ import httpx
 from config import settings 
 
 
+# need to write a decorator that would retry sending requests for a certain amount of times until it gets through (because of the limit on 3 requests per second in VK api)
+
 class VkUser:
     
     _token = settings.access_token if settings.access_token else settings.api_key
@@ -19,6 +21,7 @@ class VkUser:
         with httpx.Client() as client:
             url = f"https://api.vk.ru/method/users.get?user_ids={self.user_id}&v=5.131"
             r = client.get(url, headers=self.headers)
+            print(r.json())
         return r.json()["response"][0]
 
     async def get_friends(self) -> list:

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -61,7 +61,7 @@ async def get_friends_with_groups_and_generate_report(request: Request, user_id:
 
 
 @app.get("/getFriendsWithGroupsPDF", response_class=FileResponse)
-async def get_friends_with_groups_and_generate_PDF(request: Request, user_id: int):
+async def get_friends_with_groups_and_generate_PDF(request: Request, user_id: int, background_task: BackgroundTasks):
     user = VkUser(user_id)
     # friends = await user.get_friends_with_groups()
     friends = await user.get_friends_with_groups()
@@ -71,10 +71,10 @@ async def get_friends_with_groups_and_generate_PDF(request: Request, user_id: in
                 "user_last_name": user.info["last_name"],
                 "friends": friends
             }
-
-    with PDF("report.html", f"{user_id}_report", context) as file_path:
-        print("FILE IS GOING TO BE SENT!!!")
-        return FileResponse(file_path)
+    pdf = PDF("report.html", f"{user_id}_report", context)
+    background_task.add_task(pdf.delete)
+    file_path = await pdf.create()
+    return file_path
 
 
 

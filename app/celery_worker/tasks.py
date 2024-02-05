@@ -29,13 +29,13 @@ class PDF:
         self.context = context
         self.location = location
 
-    def __enter__(self) -> str:
+    async def create(self) -> str:
         file_path = create_pdf_and_return_path(self.template_name, self.pdf_name, self.context, self.location)
         self.file_path = file_path
         print("FILE WAS CREATED!!!!!!!!!!!!!!!")
         return file_path
 
-    def __exit__(self, exc_type, exc_value, traceback) -> None:
+    async def delete(self) -> None:
         os.remove(self.file_path)
         print("FILE WAS DELETED!!!!!!!!!!!!!!!")
 
