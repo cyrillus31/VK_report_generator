@@ -32,12 +32,10 @@ class PDF:
     async def create(self) -> str:
         file_path = create_pdf_and_return_path(self.template_name, self.pdf_name, self.context, self.location)
         self.file_path = file_path
-        print("FILE WAS CREATED!!!!!!!!!!!!!!!")
         return file_path
 
     async def delete(self) -> None:
         os.remove(self.file_path)
-        print("FILE WAS DELETED!!!!!!!!!!!!!!!")
 
 
 

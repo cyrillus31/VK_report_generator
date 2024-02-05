@@ -5,7 +5,6 @@ from fastapi.templating import Jinja2Templates
 
 from schemas import RelatedUserOut
 from services import VkUser
-# from utils import from_string_to_pdf
 from celery_worker.tasks import PDF
 
 
@@ -63,7 +62,6 @@ async def get_friends_with_groups_and_generate_report(request: Request, user_id:
 @app.get("/getFriendsWithGroupsPDF", response_class=FileResponse)
 async def get_friends_with_groups_and_generate_PDF(request: Request, user_id: int, background_task: BackgroundTasks):
     user = VkUser(user_id)
-    # friends = await user.get_friends_with_groups()
     friends = await user.get_friends_with_groups()
     context={
                 "user_id": user_id,

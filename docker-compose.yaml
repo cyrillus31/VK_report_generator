@@ -11,6 +11,19 @@ services:
       - shared_volume:/app
     restart: always
 
+  celery:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile.celery
+    environment:
+      TZ: Europe/Moscow
+    volumes:
+      - shared_volume:/app
+    depends_on:
+      - rabbit
+    restart: always
+
   rabbit:
     env_file: .env
     image: rabbitmq:3-alpine
@@ -23,19 +36,6 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
-    restart: always
-
-  celery:
-    env_file: .env
-    build:
-      context: .
-      dockerfile: Dockerfile.celery
-    environment:
-      TZ: Europe/Moscow
-    volumes:
-      - shared_volume:/app
-    depends_on:
-      - rabbit
     restart: always
 
 volumes:
