@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>List of users ralated to {{ user_first_name }} {{ user_last_name }} (id: {{ user_id }})</h1><br><br>
+
+{% for friend in friends %}
+<h2>{{ friend["first_name"] }} {{ friend["last_name"] }}</h2>
+<div>
+  VK_id: {{ friend["id"] }}<br>
+  Sex: {{ friend["sex"] }}<br>
+  About: {{ friend["about"] }}<br>
+
+  {% if friend["groups"] %}
+  <div>
+  <h4>Groups:</h4>
+  {% for group in friend["groups"] %}
+  {{ group }}
+  {% endfor %}
+  {% endif %}
+  </div>
+</div><br>
+{% endfor %}
+
+{% endblock content %}
