@@ -1,11 +1,43 @@
 version: '3'
 services:
   api:
-    env_file:
-        - .env
+    env_file: .env
     build: 
       context: .
       dockerfile: Dockerfile.app
     ports:
         - '8000:8000'
+    volumes:
+      - shared_volume:/app
+    restart: always
+
+  rabbit:
+    env_file: .env
+    image: rabbitmq:3-alpine
+    expose:
+      - "5672"
+    environment:
+      TZ: Europe/Moscow
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+  celery:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile.celery
+    environment:
+      TZ: Europe/Moscow
+    volumes:
+      - shared_volume:/app
+    depends_on:
+      - rabbit
+    restart: always
+
+volumes:
+  shared_volume:
 

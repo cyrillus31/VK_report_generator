@@ -1,6 +1,8 @@
-FROM python:3.10-alpine
-WORKDIR /celery_worker
-RUN pip install --no-cache-dir celery
-COPY . ./celery_worker/
-CMD ["celery", "-A", "tasks.tasks", "", "", ""]
+FROM python:3.12-bullseye
+WORKDIR app/
+RUN apt-get update 
+RUN apt-get install wkhtmltopdf -y
+RUN pip install --no-cache-dir celery jinja2 pdfkit pydantic-settings
+COPY ./app/celery_worker ./celery_worker
+CMD ["celery", "-A", "celery_worker.tasks", "worker", "--loglevel=INFO"]
 

@@ -5,7 +5,8 @@ from fastapi.templating import Jinja2Templates
 
 from schemas import RelatedUserOut
 from services import VkUser
-from utils import from_string_to_pdf
+# from utils import from_string_to_pdf
+from celery_worker.tasks import PDF
 
 
 app = FastAPI()
@@ -71,8 +72,9 @@ async def get_friends_with_groups_and_generate_PDF(request: Request, user_id: in
                 "friends": friends
             }
 
-    file_path = from_string_to_pdf("report.html", "new_report", context)
-    return FileResponse(file_path)
+    with PDF("report.html", f"{user_id}_report", context) as file_path:
+        print("FILE IS GOING TO BE SENT!!!")
+        return FileResponse(file_path)
 
 
 
