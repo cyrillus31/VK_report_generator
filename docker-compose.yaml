@@ -4,11 +4,16 @@ services:
     env_file: .env
     build: 
       context: .
-      dockerfile: Dockerfile.app
+      dockerfile: Dockerfile.dev.app
     ports:
         - '8000:8000'
     volumes:
-      - shared_volume:/app
+      - type: bind
+        source: /c/Users/Kirill/Desktop/PROGRAMMING/Projects/VK_report_generator/app
+        target: /app
+    depends_on:
+      database:
+        condition: service_healthy
     restart: always
 
   celery:
@@ -19,9 +24,12 @@ services:
     environment:
       TZ: Europe/Moscow
     volumes:
-      - shared_volume:/app
+      - type: bind
+        source: /c/Users/Kirill/Desktop/PROGRAMMING/Projects/VK_report_generator/app
+        target: /app
     depends_on:
-      - rabbit
+      rabbit:
+        condition: service_healthy
     restart: always
 
   rabbit:
@@ -33,11 +41,31 @@ services:
       TZ: Europe/Moscow
     healthcheck:
       test: rabbitmq-diagnostics -q ping
-      interval: 10s
+      interval: 5s
       timeout: 10s
-      retries: 5
+      retries: 10 
+    restart: always
+
+  database:
+    env_file: .env
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      DB_NAME: related_users
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+    image: postgres:15-alpine
+    expose:
+        - "5432"
+    healthcheck:
+      test: pg_isready
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - database_volume:/var/lib/postgresql/data
     restart: always
 
 volumes:
   shared_volume:
+  database_volume:
 

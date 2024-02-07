@@ -17,7 +17,7 @@ templates = Jinja2Templates(directory="static/templates")
 
 @app.get("/")
 async def root():
-    return {"message": "This API allows you to generate PDF files with information about reltated users."}
+    return {"message": "This API allows you to generate PDF files with information about reltated users. (https://t.me/cyrillus31)"}
 
 
 @app.get("/getFriends", response_model=list[RelatedUserOut])

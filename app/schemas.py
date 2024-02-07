@@ -3,17 +3,17 @@ from pydantic import BaseModel, HttpUrl
 
 
 class RelatedUserIn(BaseModel): 
-    id: int 
+    id: str 
     social_network: str = ""
     first_name: str = ""
-    last_name: str = ""
-    about: str = ""
+    last_name: Optional[str] = ""
+    about: Optional[str] = ""
     bdate: Optional[str] = "" 
     # link: Optional[HttpUrl] | None = None
 
 
 class RelatedUserOut(BaseModel):
-    id: int
+    id: str 
     social_network: str = "vkontakte"
     first_name: str
     last_name: str
