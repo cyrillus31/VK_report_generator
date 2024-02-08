@@ -1,9 +1,8 @@
 FROM python:3.12-bullseye
-WORKDIR app/
 RUN apt-get update 
 RUN apt-get install wkhtmltopdf -y
 RUN pip install --no-cache-dir celery jinja2 pdfkit pydantic-settings
-RUN mkdir celery_worker
-COPY ./app/ .
+WORKDIR app/
+COPY ./app .
 CMD ["celery", "-A", "celery_worker.tasks", "worker", "--loglevel=INFO"]
 
