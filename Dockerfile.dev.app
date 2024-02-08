@@ -13,7 +13,7 @@ COPY ./app .
 # CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--reload"]
 RUN chmod +x /app/run_server.sh
 RUN chmod +x /app/run_migrations.sh
-# CMD ["bash", "/app/run_server.sh"]
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--reload"]
+RUN bash /app/run_migrations.sh
 
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--reload"]
 
