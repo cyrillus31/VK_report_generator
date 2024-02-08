@@ -5,7 +5,7 @@
 from config import settings
 
 # DB_URL = f"postgresql://{settings.database_user}:{settings.database_password}@{settings.database_host}/related_users"
-DB_URL = f"postgresql+asyncpg://{settings.database_user}:{settings.database_password}@localhost/related_users"
+DB_URL = f"postgresql+asyncpg://{settings.database_user}:{settings.database_password}@{settings.database_host}:{settings.database_port}/related_users"
 
 # engine = create_async_engine(DB_URL, echo=True)
 # 

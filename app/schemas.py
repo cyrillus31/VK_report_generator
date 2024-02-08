@@ -3,7 +3,7 @@ from pydantic import BaseModel, HttpUrl
 
 
 class RelatedUserIn(BaseModel): 
-    id: str 
+    id: int 
     social_network: str = ""
     first_name: str = ""
     last_name: Optional[str] = ""
@@ -13,7 +13,7 @@ class RelatedUserIn(BaseModel):
 
 
 class RelatedUserOut(BaseModel):
-    id: str 
+    id: int 
     social_network: str = "vkontakte"
     first_name: str
     last_name: str
