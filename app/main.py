@@ -1,9 +1,9 @@
-from fastapi import FastAPI, Request, BackgroundTasks
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi import FastAPI, Request, BackgroundTasks, Depends, status
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from schemas import RelatedUserOut
+from schemas import RelatedUserOut, RelatedUserIn
 from services import VkUser
 from celery_worker.tasks import PDF
 
@@ -74,6 +74,9 @@ async def get_friends_with_groups_and_generate_PDF(request: Request, user_id: in
     file_path = await pdf.create()
     return file_path
 
+
+@app.post("/addFriend", status_code=status.HTTP_201_CREATED)
+async def add_firend(friend_data: RelatedUserIn = Depends()):
 
 
 
