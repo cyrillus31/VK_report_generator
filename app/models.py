@@ -1,4 +1,4 @@
-from sqlalchemy import String
+from sqlalchemy import String, Integer
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -10,8 +10,8 @@ class Base(DeclarativeBase):
 class Friend(Base):
     __tablename__ = "friend"
 
-    id: Mapped[str] = mapped_column(primary_key=True)
-    original_user_id: Mapped[str] = mapped_column(String(50))
+    id: Mapped[int] = mapped_column(primary_key=True)
+    original_user_id: Mapped[int] = mapped_column(Integer)
     social_network: Mapped[str] = mapped_column(String(30))
     first_name: Mapped[str] = mapped_column(String(50))
     last_name: Mapped[str] = mapped_column(String(50), default="")

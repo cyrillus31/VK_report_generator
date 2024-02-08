@@ -79,7 +79,7 @@ async def get_friends_with_groups_and_generate_PDF(request: Request, user_id: in
 async def add_firend(friend_data: RelatedUserIn):
     friend = FriendService(friend_data)
     await friend.add()
-    return {"message": "OK there"}
+    return {"message": "Firend added", "friend_data": friend_data.dict()}
 
 
 
