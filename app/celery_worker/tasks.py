@@ -3,7 +3,7 @@ import os
 from jinja2 import Environment, FileSystemLoader
 import pdfkit
 
-from celery_worker import celery_app
+from celery_worker.celery_config import celery_app
 from config import settings
 
 pdf_storage_path = settings.pdf_storage_path

@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
-. ./run_migrations.sh
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+source ./run_migrations.sh
+bash -c uvicorn --host 0.0.0.0 --port 8000 --reload  main:app
