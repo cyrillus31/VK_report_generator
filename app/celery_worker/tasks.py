@@ -3,7 +3,7 @@ import os
 from jinja2 import Environment, FileSystemLoader
 import pdfkit
 
-from celery_worker import celery_app
+from celery_worker.celery_config import celery_app
 from config import settings
 
 pdf_storage_path = settings.pdf_storage_path
@@ -32,12 +32,10 @@ class PDF:
     async def create(self) -> str:
         file_path = create_pdf_and_return_path(self.template_name, self.pdf_name, self.context, self.location)
         self.file_path = file_path
-        print("FILE WAS CREATED!!!!!!!!!!!!!!!")
         return file_path
 
     async def delete(self) -> None:
         os.remove(self.file_path)
-        print("FILE WAS DELETED!!!!!!!!!!!!!!!")
 
 
 
