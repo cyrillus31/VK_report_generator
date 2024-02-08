@@ -21,6 +21,6 @@ class Settings(BaseSettings):
     pdf_storage_path: str = os.path.join(cwd, "PDF")
 
     class Config:
-        env_file = os.path.join(cwd, ".env")
+        env_file = os.path.join(cwd, "..", ".env")
 
 settings = Settings()

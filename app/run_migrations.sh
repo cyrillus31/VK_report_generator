@@ -1,17 +1,5 @@
 #! /bin/bash
 
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
-echo hello hello hello hello hello hello
+touch DELETE_THIS_FILE
 # alembic revision --autogenerate -m "Intial migrations; created friend"
 # alembic upgrade head
