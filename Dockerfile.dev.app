@@ -3,7 +3,7 @@ RUN apt-get update
 RUN apt-get install wkhtmltopdf -y
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r ./requirements.txt
-WORKDIR .
+WORKDIR app/
 COPY ./app .
 # RUN alembic -c /app/alembic.ini revision --autogenerate -m 'initial'
 # RUN alembic upgrade head

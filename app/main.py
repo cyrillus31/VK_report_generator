@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from schemas import RelatedUserOut, RelatedUserIn
-from services import VkUser
+from services import VkUser, FriendService
 from celery_worker.tasks import PDF
 
 
@@ -76,7 +76,11 @@ async def get_friends_with_groups_and_generate_PDF(request: Request, user_id: in
 
 
 @app.post("/addFriend", status_code=status.HTTP_201_CREATED)
-async def add_firend(friend_data: RelatedUserIn = Depends()):
+async def add_firend(friend_data: RelatedUserIn):
+    friend = FriendService(friend_data)
+    await friend.add()
+    return {"message": "OK there"}
+
 
 
 

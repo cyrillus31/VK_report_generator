@@ -4,6 +4,7 @@ from pydantic import BaseModel, HttpUrl
 
 class RelatedUserIn(BaseModel): 
     id: int 
+    original_user_id: int 
     social_network: str = ""
     first_name: str = ""
     last_name: Optional[str] = ""

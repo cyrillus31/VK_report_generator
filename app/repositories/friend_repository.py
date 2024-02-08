@@ -31,14 +31,18 @@ class FriendRepository:
                 last_name = self.last_name
                 )
 
-        async with get_session() as session:
+        session = get_session()
+        async with session() as session:
             session.add(friend)
             await session.commit()
+        # with get_session() as session:
+        #     session.add(friend)
+        #     await session.commit()
 
     @classmethod 
     async def get(cls, original_user_id: int) -> list[None | Friend]:
         stmt = select(Friend).where(Friend.original_user_id == original_user_id)
-        async with get_session() as session:
+        with get_session() as session:
             result = await session.execute(stmt)
             result = [friend for friend in result.scalars()]
         return result

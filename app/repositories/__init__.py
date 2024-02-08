@@ -1,1 +1,1 @@
-from repositories.friend_repository import FriendRepository
+from .friend_repository import FriendRepository

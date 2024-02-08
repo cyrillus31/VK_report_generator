@@ -1,4 +1,6 @@
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from contextlib import contextmanager
+
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.orm import sessionmaker
 
 
@@ -8,9 +10,8 @@ DB_URL = f"postgresql+asyncpg://{settings.database_user}:{settings.database_pass
 
 engine = create_async_engine(DB_URL, echo=True)
 
-async_session = sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=AsyncSession, expire_on_commit=False)
+async_session = async_sessionmaker(autocommit=False, autoflush=False, bind=engine, class_=AsyncSession, expire_on_commit=False)
 
-async def get_session() -> AsyncSession:
+async def get_session():
     async with async_session() as session:
-        yield session
-
+        return session
