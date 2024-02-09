@@ -1,6 +1,5 @@
-from fastapi import FastAPI, Request, BackgroundTasks, Depends, status
-from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, Request, BackgroundTasks, status
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 
 from schemas import RelatedUserOut, RelatedUserIn
@@ -9,9 +8,6 @@ from celery_worker.tasks import PDF
 
 
 app = FastAPI()
-
-# app.mount("/static", StaticFiles(directory="static"), name="static")
-
 
 templates = Jinja2Templates(directory="templates")
 

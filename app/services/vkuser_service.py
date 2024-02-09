@@ -1,11 +1,8 @@
 import httpx
-from models import Friend 
 
 from config import settings 
 from .friend_service import FriendService
 
-
-# need to write a decorator that would retry sending requests for a certain amount of times until it gets through (because of the limit on 3 requests per second in VK api)
 
 class VkUser:
     
