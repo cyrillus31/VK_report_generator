@@ -1,16 +1,15 @@
 from typing import Optional 
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel
 
 
 class RelatedUserIn(BaseModel): 
     id: int 
     original_user_id: int 
-    social_network: str = ""
+    social_network: str = "vkontakte"
     first_name: str = ""
     last_name: Optional[str] = ""
     about: Optional[str] = ""
     bdate: Optional[str] = "" 
-    # link: Optional[HttpUrl] | None = None
 
 
 class RelatedUserOut(BaseModel):
@@ -20,6 +19,5 @@ class RelatedUserOut(BaseModel):
     last_name: str
     about: Optional[str] = "" 
     bdate: Optional[str] = "" 
-    groups: Optional[list[dict | None | int]] = [] 
-    # link: Optional[HttpUrl] | None = None
+    groups: Optional[list[dict | None | int | str]] = [] 
 

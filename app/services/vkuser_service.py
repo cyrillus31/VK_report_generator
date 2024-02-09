@@ -1,4 +1,5 @@
-import httpx 
+import httpx
+from models import Friend 
 
 from config import settings 
 from .friend_service import FriendService
@@ -44,19 +45,25 @@ class VkUser:
             user_id = self.user_id
         async with httpx.AsyncClient() as client:
             url = f"https://api.vk.ru/method/groups.get?user_id={user_id}&v=5.131"
-            params = {"extended": 0}
+            params = {"extended": 1}
+            filter = {"name"}
             r = await client.get(url, params=params, headers=self.headers)
         try:
-            return r.json()["response"]["items"]
+            groups = r.json()["response"]["items"]
+            return [group["name"] for group in groups]
         except KeyError:
-            return []
+            return [{"message": "No information found"}]
 
     async def get_friends_with_groups(self) -> list:
         friends = await self.get_friends()
         for friend in friends:
-            friend_id = int(friend["id"])
-            groups = await self.get_groups(user_id=friend_id)
-            friend["groups"] = groups
+            if not isinstance(friend, dict): 
+                continue
+            else:
+                friend_id = int(friend["id"])
+                groups = await self.get_groups(user_id=friend_id)
+                friend["groups"] = groups
+                friend["social_network"] = "VKontakte"
         return friends
 
 

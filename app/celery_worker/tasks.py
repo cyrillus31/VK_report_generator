@@ -11,7 +11,7 @@ pdf_storage_path = settings.pdf_storage_path
 if not os.path.exists(pdf_storage_path):
     os.makedirs(pdf_storage_path)
 
-env = Environment(loader=FileSystemLoader("static/templates"))
+env = Environment(loader=FileSystemLoader("templates"))
 
 @celery_app.task
 def create_pdf_and_return_path(template_name, pdf_name, context: dir, location: str) -> str:

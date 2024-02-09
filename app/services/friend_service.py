@@ -1,3 +1,4 @@
+from typing import NoReturn
 from fastapi import Depends
 
 from repositories import FriendRepository
@@ -10,11 +11,11 @@ class FriendService:
         self.friend_repository = FriendRepository(**friend_data.dict())
         self.original_user_id = friend_data.original_user_id
 
-    async def add(self):
+    async def add(self) -> None:
         await self.friend_repository.add()
     
     @classmethod
-    async def get(cls, original_user_id: int):
+    async def get(cls, original_user_id: int) -> list[Friend | None] | NoReturn:
         try:
             original_user_id = int(original_user_id)
         except ValueError:

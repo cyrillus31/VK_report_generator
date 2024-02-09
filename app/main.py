@@ -10,10 +10,10 @@ from celery_worker.tasks import PDF
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-templates = Jinja2Templates(directory="static/templates")
+templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 async def root():
@@ -49,7 +49,7 @@ async def get_friends_with_groups_and_generate_report(request: Request, user_id:
                 "user_id": user_id,
                 "user_first_name": user.info["first_name"],
                 "user_last_name": user.info["last_name"],
-                "friends": friends
+                "friends": friends,
             }
            
     return templates.TemplateResponse(
