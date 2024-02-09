@@ -25,12 +25,12 @@ This endpoint accepts the user object with the following expected structure:
 
 ### GET
 
-`/getFriendsWithGroupdsPDF?user_id=<int>`
+`/getFriendsWithGroupsPDF?user_id=<int>`
 
 This endpoint will send you back an **PDF** report containing information about all users related to the *user_id*. </br></br>
 
 
-`/getFriendsWithGroupdsREPORT?user_id=<int>`
+`/getFriendsWithGroupsREPORT?user_id=<int>`
 
 This endpoint will send you back an **HTML** report containing information about all users related to the *user_id*.</br></br>
 
