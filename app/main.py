@@ -7,7 +7,11 @@ from services import VkUser, FriendService
 from celery_worker.tasks import PDF
 
 
-app = FastAPI()
+app = FastAPI(
+        title="VK_report_generator",
+        description="This application allows you to generate PDF reports with personal information of all directly related users in VK social network and allows you to add related contacts from other social networks.",
+        version="0.9.0"
+        )
 
 templates = Jinja2Templates(directory="templates")
 
