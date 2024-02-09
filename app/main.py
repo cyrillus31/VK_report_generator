@@ -1,19 +1,19 @@
-from fastapi import FastAPI, Request, BackgroundTasks
+from fastapi import FastAPI, Request, BackgroundTasks, status
 from fastapi.responses import HTMLResponse, FileResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from schemas import RelatedUserOut
-from services import VkUser
+from schemas import RelatedUserOut, RelatedUserIn
+from services import VkUser, FriendService
 from celery_worker.tasks import PDF
 
 
-app = FastAPI()
+app = FastAPI(
+        title="VK_report_generator",
+        description="This application allows you to generate PDF reports with personal information of all directly related users in VK social network and allows you to add related contacts from other social networks.",
+        version="0.9.0"
+        )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-
-templates = Jinja2Templates(directory="static/templates")
+templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 async def root():
@@ -49,7 +49,7 @@ async def get_friends_with_groups_and_generate_report(request: Request, user_id:
                 "user_id": user_id,
                 "user_first_name": user.info["first_name"],
                 "user_last_name": user.info["last_name"],
-                "friends": friends
+                "friends": friends,
             }
            
     return templates.TemplateResponse(
@@ -73,6 +73,13 @@ async def get_friends_with_groups_and_generate_PDF(request: Request, user_id: in
     background_task.add_task(pdf.delete)
     file_path = await pdf.create()
     return file_path
+
+
+@app.post("/addFriend", status_code=status.HTTP_201_CREATED)
+async def add_firend(friend_data: RelatedUserIn):
+    friend = FriendService(friend_data)
+    await friend.add()
+    return {"message": "Firend added", "friend_data": friend_data.dict()}
 
 
 

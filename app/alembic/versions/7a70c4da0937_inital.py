@@ -22,10 +22,12 @@ def upgrade() -> None:
     op.create_table(
             "friend",
             sa.Column("id", sa.String, primary_key=True),
-            sa.Column("original_user_id", sa.String(50)),
+            sa.Column("original_user_id", sa.Integer),
             sa.Column("social_network", sa.String(30)),
             sa.Column("first_name", sa.String(50)),
             sa.Column("last_name", sa.String(50)),
+            sa.Column("about", sa.String(500)),
+            sa.Column("bdate", sa.String(50)),
             )
 
 
