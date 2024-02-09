@@ -15,7 +15,12 @@ class FriendService:
     
     @classmethod
     async def get(cls, original_user_id: int):
-        list_of_friends: list[None | Friend] = await FriendRepository.get(original_user_id)
-        return list_of_friends
+        try:
+            original_user_id = int(original_user_id)
+        except ValueError:
+            raise Exception("Invalid original_user_id. Supposed to be an integer.")
+        else:
+            list_of_friends: list[None | Friend] = await FriendRepository.get(original_user_id)
+            return list_of_friends
 
 

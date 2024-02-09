@@ -1,6 +1,7 @@
 import httpx 
 
 from config import settings 
+from .friend_service import FriendService
 
 
 # need to write a decorator that would retry sending requests for a certain amount of times until it gets through (because of the limit on 3 requests per second in VK api)
@@ -24,15 +25,20 @@ class VkUser:
             print(r.json())
         return r.json()["response"][0]
 
+    async def _get_friends_from_other_networks(self) -> list:
+        other_friends = await FriendService.get(self.user_id)
+        return other_friends
+
     async def get_friends(self) -> list:
         async with httpx.AsyncClient() as client:
             url = f"https://api.vk.ru/method/friends.get?user_id={self.user_id}&v=5.131&order=name"
             fields = ["sex", "about", "bdate"]
-            # fields = ["sex", "bdate"]
             params = {"fields": f"{','.join(fields)}"}
             r = await client.get(url, params=params, headers=self.headers)
-        return r.json()["response"]["items"]
-
+            friends = r.json()["response"]["items"]
+        other_friends = await self._get_friends_from_other_networks()
+        return other_friends + friends
+ 
     async def get_groups(self, user_id=None) -> list:
         if not user_id:
             user_id = self.user_id
