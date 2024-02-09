@@ -28,7 +28,9 @@ class FriendRepository:
                 original_user_id = self.original_user_id,
                 social_network = self.social_network,
                 first_name = self.first_name,
-                last_name = self.last_name
+                last_name = self.last_name,
+                about = self.about,
+                bdate = self.bdate,
                 )
         async with get_session() as session:
             session.add(friend)
